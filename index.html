@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcola Prezzo Nuggets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        label {
+            font-size: 18px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .result {
+            font-size: 20px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 16px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Calcola il Prezzo delle Nuggets</h1>
+    <label for="nuggets">Quante nuggets desideri?</label>
+    <input type="number" id="nuggets" placeholder="Inserisci il numero di nuggets" min="4" step="1">
+    <button onclick="calcolaPrezzo()">Calcola</button>
+    <div class="result" id="risultato"></div>
+    <div class="error" id="errore"></div>
+</div>
+
+<script>
+    function calcolaPrezzo() {
+        const numeroNuggets = parseInt(document.getElementById("nuggets").value);
+        const risultato = document.getElementById("risultato");
+        const errore = document.getElementById("errore");
+
+        // Reset dei messaggi
+        risultato.textContent = "";
+        errore.textContent = "";
+
+        // Validazione input
+        if (!numeroNuggets || numeroNuggets < 4) {
+            errore.textContent = "Inserisci un numero valido di nuggets (minimo 4).";
+            return;
+        }
+
+        // Listino prezzi
+        const prezzi = {
+            4: 6.99,
+            10: 13.99,
+            20: 25.99,
+            50: 49.99
+        };
+
+        let prezzo = 0;
+
+        // Determinazione del prezzo
+        if (numeroNuggets <= 4) {
+            prezzo = prezzi[4];
+        } else if (numeroNuggets <= 10) {
+            prezzo = prezzi[10];
+        } else if (numeroNuggets <= 20) {
+            prezzo = prezzi[20];
+        } else if (numeroNuggets <= 50) {
+            prezzo = prezzi[50];
+        } else {
+            // Per quantità superiori a 50, calcoliamo il prezzo aggiuntivo
+            let extraNuggets = numeroNuggets - 50;
+            prezzo = prezzi[50] + (extraNuggets * (prezzi[50] / 50));
+        }
+
+        // Mostrare il risultato
+        risultato.textContent = `Il prezzo per ${numeroNuggets} nuggets è: €${prezzo.toFixed(2)}`;
+    }
+</script>
+
+</body>
+</html>
